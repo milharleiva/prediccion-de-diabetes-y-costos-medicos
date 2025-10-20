@@ -1,6 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { spawn } from 'child_process';
-import path from 'path';
+import { predictDiabetes, DiabetesData } from './ml-utils';
 
 interface DiabetesInput {
   pregnancies: number;
@@ -37,7 +36,7 @@ export default function handler(
   }
 
   if (req.method === 'GET') {
-    res.status(200).json({ message: 'Diabetes prediction API is running (Python ML Model)' });
+    res.status(200).json({ message: 'Diabetes prediction API is running (Native JS ML Model)' });
     return;
   }
 
@@ -54,61 +53,40 @@ export default function handler(
         age = 0
       } = req.body as DiabetesInput;
 
-      // Prepare Python script path
-      const scriptPath = path.join(process.cwd(), 'scripts', 'predict_diabetes.py');
-      const modelPath = path.join(process.cwd(), 'diabetes_model.pkl');
+      // Prepare data for ML model
+      const modelInput: DiabetesData = {
+        Pregnancies: pregnancies,
+        Glucose: glucose,
+        BloodPressure: bloodPressure,
+        SkinThickness: skinThickness,
+        Insulin: insulin,
+        BMI: bmi,
+        DiabetesPedigreeFunction: diabetesPedigreeFunction,
+        Age: age
+      };
 
-      // Create input data string
-      const inputData = `${pregnancies},${glucose},${bloodPressure},${skinThickness},${insulin},${bmi},${diabetesPedigreeFunction},${age}`;
+      // Make prediction using native JavaScript
+      const result = predictDiabetes(modelInput);
 
-      // Run Python script
-      const python = spawn('python', [scriptPath, modelPath, inputData]);
-
-      let pythonOutput = '';
-      let pythonError = '';
-
-      python.stdout.on('data', (data) => {
-        pythonOutput += data.toString();
-      });
-
-      python.stderr.on('data', (data) => {
-        pythonError += data.toString();
-      });
-
-      python.on('close', (code) => {
-        if (code !== 0) {
-          console.error('Python script error:', pythonError);
-          res.status(500).json({ error: `Python script failed: ${pythonError}` });
-          return;
+      const response: DiabetesResponse = {
+        prediction: result.prediction,
+        diabetesRisk: result.prediction === 1 ? 'High Risk' : 'Low Risk',
+        probabilityNoDiabetes: result.probabilities[0],
+        probabilityDiabetes: result.probabilities[1],
+        modelType: 'Native JS ML Model (Logistic Regression)',
+        inputData: {
+          pregnancies,
+          glucose,
+          bloodPressure,
+          skinThickness,
+          insulin,
+          bmi,
+          diabetesPedigreeFunction,
+          age
         }
+      };
 
-        try {
-          const result = JSON.parse(pythonOutput.trim());
-
-          const response: DiabetesResponse = {
-            prediction: result.prediction,
-            diabetesRisk: result.prediction === 1 ? 'High Risk' : 'Low Risk',
-            probabilityNoDiabetes: result.probabilities[0],
-            probabilityDiabetes: result.probabilities[1],
-            modelType: 'Trained ML Model (Logistic Regression)',
-            inputData: {
-              pregnancies,
-              glucose,
-              bloodPressure,
-              skinThickness,
-              insulin,
-              bmi,
-              diabetesPedigreeFunction,
-              age
-            }
-          };
-
-          res.status(200).json(response);
-        } catch (parseError) {
-          console.error('JSON parse error:', parseError);
-          res.status(500).json({ error: 'Failed to parse Python output' });
-        }
-      });
+      res.status(200).json(response);
 
     } catch (error) {
       res.status(500).json({ error: error instanceof Error ? error.message : 'Unknown error' });

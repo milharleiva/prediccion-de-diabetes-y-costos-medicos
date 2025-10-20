@@ -1,6 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { spawn } from 'child_process';
-import path from 'path';
+import { predictInsuranceCost, InsuranceData } from './ml-utils';
 
 interface InsuranceInput {
   age: number;
@@ -33,7 +32,7 @@ export default function handler(
   }
 
   if (req.method === 'GET') {
-    res.status(200).json({ message: 'Insurance cost prediction API is running (Python ML Model)' });
+    res.status(200).json({ message: 'Insurance cost prediction API is running (Native JS ML Model)' });
     return;
   }
 
@@ -48,57 +47,32 @@ export default function handler(
         region = 'northeast'
       } = req.body as InsuranceInput;
 
-      // Prepare Python script path
-      const scriptPath = path.join(process.cwd(), 'scripts', 'predict_insurance.py');
-      const modelPath = path.join(process.cwd(), 'insurance_cost_model.pkl');
+      // Prepare data for ML model (only features used in training)
+      const modelInput: InsuranceData = {
+        age,
+        bmi,
+        children,
+        smoker
+      };
 
-      // Create input data string (only features used in training: age, bmi, children, smoker)
-      const inputData = `${age},${bmi},${children},${smoker}`;
+      // Make prediction using native JavaScript
+      const predictedCost = predictInsuranceCost(modelInput);
 
-      // Run Python script
-      const python = spawn('python', [scriptPath, modelPath, inputData]);
-
-      let pythonOutput = '';
-      let pythonError = '';
-
-      python.stdout.on('data', (data) => {
-        pythonOutput += data.toString();
-      });
-
-      python.stderr.on('data', (data) => {
-        pythonError += data.toString();
-      });
-
-      python.on('close', (code) => {
-        if (code !== 0) {
-          console.error('Python script error:', pythonError);
-          res.status(500).json({ error: `Python script failed: ${pythonError}` });
-          return;
+      const response: InsuranceResponse = {
+        predictedCost: Math.round(predictedCost * 100) / 100, // Round to 2 decimal places
+        currency: 'USD',
+        modelType: 'Native JS ML Model (Polynomial Regression)',
+        inputData: {
+          age,
+          sex,
+          bmi,
+          children,
+          smoker,
+          region
         }
+      };
 
-        try {
-          const result = JSON.parse(pythonOutput.trim());
-
-          const response: InsuranceResponse = {
-            predictedCost: result.predicted_cost,
-            currency: 'USD',
-            modelType: 'Trained ML Model (Polynomial Regression)',
-            inputData: {
-              age,
-              sex,
-              bmi,
-              children,
-              smoker,
-              region
-            }
-          };
-
-          res.status(200).json(response);
-        } catch (parseError) {
-          console.error('JSON parse error:', parseError);
-          res.status(500).json({ error: 'Failed to parse Python output' });
-        }
-      });
+      res.status(200).json(response);
 
     } catch (error) {
       res.status(500).json({ error: error instanceof Error ? error.message : 'Unknown error' });

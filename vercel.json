@@ -1,7 +1,23 @@
 {
   "functions": {
+    "api/diabetes.py": {
+      "runtime": "python3.9"
+    },
+    "api/insurance.py": {
+      "runtime": "python3.9"
+    },
     "pages/api/**/*.ts": {
-      "maxDuration": 60
+      "maxDuration": 30
     }
-  }
+  },
+  "rewrites": [
+    {
+      "source": "/api/diabetes",
+      "destination": "/api/diabetes.py"
+    },
+    {
+      "source": "/api/insurance",
+      "destination": "/api/insurance.py"
+    }
+  ]
 }
