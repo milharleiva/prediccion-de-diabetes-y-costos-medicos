@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python:*)",
+      "Bash(jupyter nbconvert:*)",
+      "Bash(pip install:*)",
+      "Bash(npm install)",
+      "Bash(npm run type-check:*)",
+      "Bash(npm run build:*)",
+      "Bash(npm run dev:*)",
+      "Bash(curl:*)",
+      "Bash(npx next:*)",
+      "Bash(git restore:*)",
+      "Bash(copy \"costos-medicos\\insurance_cost_model.pkl\" \".\")",
+      "Bash(copy \"diabete\\diabetes_model.pkl\" \".\")"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
