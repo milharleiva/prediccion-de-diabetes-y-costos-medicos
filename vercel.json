@@ -1,10 +1,10 @@
 {
   "functions": {
     "pages/api/diabetes.py": {
-      "runtime": "python3.9"
+      "runtime": "python@3.9"
     },
     "pages/api/insurance.py": {
-      "runtime": "python3.9"
+      "runtime": "python@3.9"
     }
   }
 }
