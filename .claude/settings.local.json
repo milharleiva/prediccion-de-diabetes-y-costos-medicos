@@ -12,7 +12,8 @@
       "Bash(npx next:*)",
       "Bash(git restore:*)",
       "Bash(copy \"costos-medicos\\insurance_cost_model.pkl\" \".\")",
-      "Bash(copy \"diabete\\diabetes_model.pkl\" \".\")"
+      "Bash(copy \"diabete\\diabetes_model.pkl\" \".\")",
+      "WebSearch"
     ],
     "deny": [],
     "ask": []
