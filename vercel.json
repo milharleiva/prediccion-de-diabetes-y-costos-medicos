@@ -1,23 +1,22 @@
 {
-  "functions": {
-    "api/diabetes.py": {
-      "runtime": "python3.9"
+  "builds": [
+    {
+      "src": "api/*.py",
+      "use": "@vercel/python"
     },
-    "api/insurance.py": {
-      "runtime": "python3.9"
-    },
-    "pages/api/**/*.ts": {
-      "maxDuration": 30
+    {
+      "src": "pages/**/*",
+      "use": "@vercel/next"
     }
-  },
-  "rewrites": [
+  ],
+  "routes": [
     {
-      "source": "/api/diabetes",
-      "destination": "/api/diabetes.py"
+      "src": "/api/(.*)",
+      "dest": "/api/$1"
     },
     {
-      "source": "/api/insurance",
-      "destination": "/api/insurance.py"
+      "src": "/(.*)",
+      "dest": "/$1"
     }
   ]
 }
