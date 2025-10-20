@@ -1,176 +1,176 @@
-# Health Predictor - ML Web Application
+# Predictor de Salud - Aplicación Web ML
 
-Web application that implements medical insurance cost regression and diabetes prediction models with a graphical interface, deployed to production.
+Aplicación web que implementa modelos de regresión de costos de seguro médico y predicción de diabetes con interfaz gráfica, desplegada en producción.
 
-## What it does
+## Qué hace
 
-- **Diabetes Risk Assessment**: Predicts diabetes risk based on medical data with 78.6% accuracy
-- **Insurance Cost Calculator**: Estimates annual health insurance costs with 86.7% R² score
+- **Evaluación de Riesgo de Diabetes**: Predice el riesgo de diabetes basado en datos médicos con 78.6% de precisión
+- **Calculadora de Costos de Seguro**: Estima costos anuales de seguro médico con R² de 86.7%
 
-## Tech Stack
+## Stack Tecnológico
 
 - **Frontend**: Next.js + TypeScript + Tailwind CSS
-- **Backend**: Next.js API Routes + Python Scripts
-- **ML Models**: Scikit-learn (stored as .pkl files)
-- **Architecture**: Clean Architecture pattern
+- **Backend**: Next.js API Routes + Scripts Python
+- **Modelos ML**: Scikit-learn (almacenados como archivos .pkl)
+- **Arquitectura**: Patrón Clean Architecture
 
-## Project Structure
+## Estructura del Proyecto
 
 ```
-├── src/                    # Clean Architecture layers
-│   ├── domain/            # Business logic & entities
-│   ├── infrastructure/    # APIs & external services
-│   └── presentation/      # UI components
-├── pages/                 # Next.js pages & API routes
-│   ├── api/              # TypeScript APIs that call Python
-│   ├── diabetes.tsx      # Diabetes prediction page
-│   └── insurance.tsx     # Insurance cost page
-├── scripts/              # Python scripts for ML predictions
-├── diabete/              # Diabetes model & training
-├── costos-medicos/       # Insurance model & training
-└── telco/                # Telco churn (reference only)
+├── src/                    # Capas de Clean Architecture
+│   ├── domain/            # Lógica de negocio y entidades
+│   ├── infrastructure/    # APIs y servicios externos
+│   └── presentation/      # Componentes UI
+├── pages/                 # Páginas Next.js y rutas API
+│   ├── api/              # APIs TypeScript que llaman Python
+│   ├── diabetes.tsx      # Página predicción diabetes
+│   └── insurance.tsx     # Página costos seguro
+├── scripts/              # Scripts Python para predicciones ML
+├── diabete/              # Modelo diabetes y entrenamiento
+├── costos-medicos/       # Modelo seguro y entrenamiento
+└── telco/                # Telco churn (solo referencia)
 ```
 
-## How it works
+## Cómo funciona
 
-1. **User fills form** in web interface
-2. **Clean Architecture flow**: UI → UseCase → Repository → API
-3. **API calls Python script** with input data
-4. **Python loads .pkl model** and makes prediction
-5. **Result returns** through the same chain
+1. **El usuario llena formulario** en interfaz web
+2. **Flujo Clean Architecture**: UI → UseCase → Repository → API
+3. **API llama script Python** con datos de entrada
+4. **Python carga modelo .pkl** y hace predicción
+5. **Resultado regresa** a través de la misma cadena
 
-## Machine Learning Models
+## Modelos de Machine Learning
 
-### Diabetes Model
-- **Algorithm**: Logistic Regression with preprocessing
-- **Accuracy**: 78.6%
-- **Features**: Pregnancies, glucose, blood pressure, BMI, age, etc.
-- **Output**: Risk probability (0-1)
+### Modelo Diabetes
+- **Algoritmo**: Regresión Logística con preprocesamiento
+- **Precisión**: 78.6%
+- **Características**: Embarazos, glucosa, presión arterial, BMI, edad, etc.
+- **Salida**: Probabilidad de riesgo (0-1)
 
-### Insurance Model
-- **Algorithm**: Polynomial Regression (degree 2)
+### Modelo Seguro
+- **Algoritmo**: Regresión Polinomial (grado 2)
 - **R² Score**: 86.7%
-- **Features**: Age, BMI, children, smoking status
-- **Output**: Annual cost in USD
+- **Características**: Edad, BMI, hijos, estado fumador
+- **Salida**: Costo anual en USD
 
-## Getting Started
+## Comenzar
 
-### Prerequisites
+### Prerrequisitos
 - Node.js 18+
 - Python 3.9+
-- npm or yarn
+- npm o yarn
 
-### Installation
+### Instalación
 
-1. **Clone the repository**
+1. **Clonar el repositorio**
 ```bash
 git clone [your-repo-url]
 cd ejemplo-api-ml
 ```
 
-2. **Install dependencies**
+2. **Instalar dependencias**
 ```bash
 npm install
 pip install -r requirements.txt
 ```
 
-3. **Run development server**
+3. **Ejecutar servidor de desarrollo**
 ```bash
 npm run dev
 ```
 
-4. **Open browser**
+4. **Abrir navegador**
 ```
 http://localhost:3000
 ```
 
-## API Endpoints
+## Endpoints API
 
-- `GET /api/diabetes` - Health check
-- `POST /api/diabetes` - Predict diabetes risk
-- `GET /api/insurance` - Health check
-- `POST /api/insurance` - Calculate insurance cost
+- `GET /api/diabetes` - Verificación de salud
+- `POST /api/diabetes` - Predecir riesgo de diabetes
+- `GET /api/insurance` - Verificación de salud
+- `POST /api/insurance` - Calcular costo de seguro
 
-## Model Training
+## Entrenamiento de Modelos
 
-Models are already trained and saved as .pkl files. To retrain:
+Los modelos ya están entrenados y guardados como archivos .pkl. Para reentrenar:
 
 ```bash
-# Diabetes model
+# Modelo diabetes
 cd diabete
 python train_diabetes_model.py
 
-# Insurance model
+# Modelo seguro
 cd costos-medicos
 python train_model.py
 ```
 
-## Deployment
+## Despliegue
 
-Ready for Vercel deployment:
-- `vercel.json` configured for Python + TypeScript
-- `requirements.txt` for Python dependencies
-- Static .pkl files included
+Listo para despliegue en Vercel:
+- `vercel.json` configurado para Python + TypeScript
+- `requirements.txt` para dependencias Python
+- Archivos .pkl estáticos incluidos
 
-## File Structure Details
+## Detalles de Estructura de Archivos
 
-### Key Files
-- `diabetes_model.pkl` - Trained diabetes prediction model
-- `insurance_cost_model.pkl` - Trained insurance cost model
-- `scripts/predict_*.py` - Python prediction scripts
-- `src/infrastructure/repositories/PredictionRepository.ts` - API client
+### Archivos Clave
+- `diabetes_model.pkl` - Modelo entrenado predicción diabetes
+- `insurance_cost_model.pkl` - Modelo entrenado costos seguro
+- `scripts/predict_*.py` - Scripts Python de predicción
+- `src/infrastructure/repositories/PredictionRepository.ts` - Cliente API
 
-### Data Flow
+### Flujo de Datos
 ```
-Form Input → Entity Validation → UseCase → Repository → API → Python → Model → Result
+Entrada Formulario → Validación Entidad → UseCase → Repository → API → Python → Modelo → Resultado
 ```
 
-## Research Questions & Analysis
+## Preguntas de Investigación y Análisis
 
-This project addresses the following research questions through implementation and analysis:
+Este proyecto aborda las siguientes preguntas de investigación a través de implementación y análisis:
 
 ### 1. ¿Cuál es el umbral ideal para el modelo de predicción de diabetes?
-**Answer**: The optimal threshold is **0.43** based on ROC curve analysis. This threshold balances sensitivity (78.6%) and specificity, minimizing false negatives while maintaining acceptable precision for medical screening purposes.
+**Respuesta**: El umbral óptimo es **0.43** basado en análisis de curva ROC. Este umbral equilibra sensibilidad (78.6%) y especificidad, minimizando falsos negativos mientras mantiene precisión aceptable para propósitos de screening médico.
 
 ### 2. ¿Cuáles son los factores que más influyen en el precio de los costos asociados al seguro médico?
-**Answer**: Feature importance analysis reveals:
-- **Smoking status (smoker)**: 67.3% - Highest impact factor
-- **Age**: 18.2% - Second most significant
-- **BMI**: 8.9% - Moderate influence
-- **Children**: 5.6% - Minor impact
-- **Sex and Region**: Removed due to minimal predictive value
+**Respuesta**: El análisis de importancia de características revela:
+- **Estado fumador (smoker)**: 67.3% - Factor de mayor impacto
+- **Edad**: 18.2% - Segundo más significativo
+- **BMI**: 8.9% - Influencia moderada
+- **Hijos**: 5.6% - Impacto menor
+- **Sexo y Región**: Removidos por valor predictivo mínimo
 
 ### 3. Análisis comparativo de características usando RandomForest
-**Results**:
-- **Diabetes Model**: RandomForest accuracy: 76.8% vs Logistic Regression: 78.6%
-- **Insurance Model**: RandomForest R²: 84.2% vs Polynomial Regression: 86.7%
-- **Conclusion**: Linear models outperform RandomForest for these specific datasets due to the nature of the relationships in the data.
+**Resultados**:
+- **Modelo Diabetes**: RandomForest precisión: 76.8% vs Regresión Logística: 78.6%
+- **Modelo Seguro**: RandomForest R²: 84.2% vs Regresión Polinomial: 86.7%
+- **Conclusión**: Los modelos lineales superan a RandomForest para estos datasets específicos debido a la naturaleza de las relaciones en los datos.
 
 ### 4. ¿Qué técnica de optimización mejora el rendimiento de ambos modelos?
-**Optimization Techniques Applied**:
-- **Diabetes**: Hyperparameter tuning with GridSearchCV (C=1.0, penalty='l2'), feature preprocessing with custom transformers
-- **Insurance**: Polynomial features (degree=2), feature selection removing low-impact variables
-- **Both**: StandardScaler for feature normalization, cross-validation for robust evaluation
+**Técnicas de Optimización Aplicadas**:
+- **Diabetes**: Ajuste de hiperparámetros con GridSearchCV (C=1.0, penalty='l2'), preprocesamiento de características con transformadores personalizados
+- **Seguro**: Características polinomiales (grado=2), selección de características removiendo variables de bajo impacto
+- **Ambos**: StandardScaler para normalización de características, validación cruzada para evaluación robusta
 
 ### 5. Contexto de los datos
-**Datasets Used**:
-- **Diabetes Dataset**: 768 patients, 8 medical features (Pima Indian Diabetes Database)
-- **Insurance Dataset**: 1,338 clients, 6 demographic/health features
-- **Both datasets**: Real-world medical/insurance data with proper preprocessing for missing values and outliers
+**Datasets Utilizados**:
+- **Dataset Diabetes**: 768 pacientes, 8 características médicas (Base de Datos Diabetes Indios Pima)
+- **Dataset Seguro**: 1,338 clientes, 6 características demográficas/salud
+- **Ambos datasets**: Datos reales médicos/seguros con preprocesamiento adecuado para valores faltantes y outliers
 
 ### 6. Análisis del sesgo de los modelos
-**Bias Analysis**:
-- **Diabetes Model**: Shows demographic bias toward Pima Indian women, may not generalize to other populations
-- **Insurance Model**: Geographic bias (US-specific regions), potential socioeconomic bias in smoking patterns
-- **Mitigation**: Implemented validation techniques, feature engineering, and documented limitations
+**Análisis de Sesgo**:
+- **Modelo Diabetes**: Muestra sesgo demográfico hacia mujeres Indias Pima, puede no generalizarse a otras poblaciones
+- **Modelo Seguro**: Sesgo geográfico (regiones específicas de EE.UU.), potencial sesgo socioeconómico en patrones de fumado
+- **Mitigación**: Se implementaron técnicas de validación, ingeniería de características y se documentaron limitaciones
 
-## Contributing
+## Contribuciones
 
-1. Models are trained on real datasets
-2. Follow Clean Architecture patterns
-3. Add tests for new features
-4. Update README for new functionality
+1. Los modelos están entrenados con datasets reales
+2. Seguir patrones de Clean Architecture
+3. Agregar pruebas para nuevas características
+4. Actualizar README para nueva funcionalidad
 
-## License
+## Licencia
 
 MIT License
