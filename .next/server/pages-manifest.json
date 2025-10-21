@@ -1,9 +1,1 @@
-{
-  "/_app": "pages/_app.js",
-  "/_error": "pages/_error.js",
-  "/_document": "pages/_document.js",
-  "/diabetes": "pages/diabetes.js",
-  "/": "pages/index.js",
-  "/insurance": "pages/insurance.js",
-  "/api/insurance": "pages/api/insurance.js"
-}
+{}
