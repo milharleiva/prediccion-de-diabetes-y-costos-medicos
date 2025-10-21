@@ -206,10 +206,3 @@ Este proyecto aborda las siguientes preguntas de investigación a través de imp
 - **Modelo Seguro**: Sesgo geográfico (regiones específicas de EE.UU.), potencial sesgo socioeconómico en patrones de fumado
 - **Mitigación**: Se implementaron técnicas de validación, ingeniería de características y se documentaron limitaciones
 
-## Contribuciones
-
-1. Los modelos están entrenados con datasets reales
-2. Seguir patrones de Clean Architecture
-3. Agregar pruebas para nuevas características
-4. Actualizar README para nueva funcionalidad
-
