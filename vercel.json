@@ -1,7 +1,11 @@
 {
   "builds": [
     {
-      "src": "api/*.py",
+      "src": "api/diabetes.py",
+      "use": "@vercel/python"
+    },
+    {
+      "src": "api/insurance.py",
       "use": "@vercel/python"
     },
     {
@@ -11,8 +15,12 @@
   ],
   "routes": [
     {
-      "src": "/api/(.*)",
-      "dest": "/api/$1"
+      "src": "/api/diabetes",
+      "dest": "/api/diabetes.py"
+    },
+    {
+      "src": "/api/insurance",
+      "dest": "/api/insurance.py"
     },
     {
       "src": "/(.*)",
