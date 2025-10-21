@@ -79,21 +79,21 @@ export default function InsurancePage() {
   const getCostLevel = (cost: number): { level: string; color: string; description: string } => {
     if (cost < 5000) {
       return {
-        level: 'Low',
+        level: 'Bajo',
         color: 'bg-green-100 text-green-800',
-        description: 'Your estimated insurance cost is below average'
+        description: 'Tu costo estimado de seguro está por debajo del promedio'
       };
     } else if (cost < 15000) {
       return {
-        level: 'Moderate',
+        level: 'Moderado',
         color: 'bg-yellow-100 text-yellow-800',
-        description: 'Your estimated insurance cost is around average'
+        description: 'Tu costo estimado de seguro está cerca del promedio'
       };
     } else {
       return {
-        level: 'High',
+        level: 'Alto',
         color: 'bg-red-100 text-red-800',
-        description: 'Your estimated insurance cost is above average'
+        description: 'Tu costo estimado de seguro está por encima del promedio'
       };
     }
   };
@@ -101,14 +101,14 @@ export default function InsurancePage() {
   const costInfo = result ? getCostLevel(result.predictedCost) : null;
 
   return (
-    <Layout title="Insurance Cost Calculator - Health Predictor">
+    <Layout title="Calculadora de Costos de Seguros - Predictor de Salud">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-4">
-            Insurance Cost Calculator
+            Calculadora de Costos de Seguros
           </h1>
           <p className="text-lg text-gray-600">
-            Estimate your annual health insurance cost based on personal factors
+            Estima tu costo anual de seguro de salud basado en factores personales
           </p>
         </div>
 
@@ -219,10 +219,10 @@ export default function InsurancePage() {
                   {loading ? (
                     <div className="flex items-center justify-center">
                       <div className="loading-spinner mr-2"></div>
-                      Calculating...
+                      Calculando...
                     </div>
                   ) : (
-                    'Calculate Insurance Cost'
+                    'Calcular Costo de Seguro'
                   )}
                 </button>
                 <button
@@ -230,7 +230,7 @@ export default function InsurancePage() {
                   onClick={handleReset}
                   className="btn-secondary px-6"
                 >
-                  Reset
+                  Restablecer
                 </button>
               </div>
             </form>
@@ -241,17 +241,17 @@ export default function InsurancePage() {
             {result ? (
               <div className="space-y-6">
                 <div className="text-center">
-                  <h2 className="text-2xl font-bold mb-4">Cost Estimate</h2>
+                  <h2 className="text-2xl font-bold mb-4">Estimación de Costo</h2>
 
                   {/* Cost Amount */}
                   <div className="text-4xl font-bold text-blue-600 mb-2">
                     {formatCurrency(result.predictedCost)}
                   </div>
-                  <p className="text-lg text-gray-600 mb-4">Annual Insurance Cost</p>
+                  <p className="text-lg text-gray-600 mb-4">Costo Anual de Seguro</p>
 
                   {/* Cost Level Badge */}
                   <div className={`inline-flex items-center px-6 py-3 rounded-full text-lg font-semibold ${costInfo?.color}`}>
-                    {costInfo?.level} Cost
+                    Costo {costInfo?.level}
                   </div>
 
                   <p className="text-gray-600 mt-2">{costInfo?.description}</p>
@@ -259,16 +259,16 @@ export default function InsurancePage() {
 
                 {/* Cost Breakdown */}
                 <div className="space-y-4">
-                  <h3 className="font-semibold text-lg">Cost Factors</h3>
+                  <h3 className="font-semibold text-lg">Factores de Costo</h3>
 
                   <div className="grid grid-cols-2 gap-4 text-sm">
                     <div className="space-y-2">
                       <div className="flex justify-between">
-                        <span>Age:</span>
-                        <span className="font-medium">{result.inputData.age} years</span>
+                        <span>Edad:</span>
+                        <span className="font-medium">{result.inputData.age} años</span>
                       </div>
                       <div className="flex justify-between">
-                        <span>Sex:</span>
+                        <span>Sexo:</span>
                         <span className="font-medium capitalize">{result.inputData.sex}</span>
                       </div>
                       <div className="flex justify-between">
@@ -278,17 +278,17 @@ export default function InsurancePage() {
                     </div>
                     <div className="space-y-2">
                       <div className="flex justify-between">
-                        <span>Children:</span>
+                        <span>Hijos:</span>
                         <span className="font-medium">{result.inputData.children}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span>Smoker:</span>
+                        <span>Fumador:</span>
                         <span className={`font-medium ${result.inputData.smoker === 'yes' ? 'text-red-600' : 'text-green-600'}`}>
-                          {result.inputData.smoker === 'yes' ? 'Yes' : 'No'}
+                          {result.inputData.smoker === 'yes' ? 'Sí' : 'No'}
                         </span>
                       </div>
                       <div className="flex justify-between">
-                        <span>Region:</span>
+                        <span>Región:</span>
                         <span className="font-medium capitalize">{result.inputData.region}</span>
                       </div>
                     </div>
@@ -297,32 +297,32 @@ export default function InsurancePage() {
 
                 {/* Cost Reduction Tips */}
                 <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                  <h3 className="font-semibold text-blue-900 mb-2">Ways to Reduce Costs</h3>
+                  <h3 className="font-semibold text-blue-900 mb-2">Formas de Reducir Costos</h3>
                   <ul className="text-blue-800 text-sm space-y-1">
                     {result.inputData.smoker === 'yes' && (
-                      <li>• Quit smoking - this is the biggest factor affecting your premium</li>
+                      <li>• Deja de fumar - este es el factor más grande que afecta tu prima</li>
                     )}
                     {result.inputData.bmi > 30 && (
-                      <li>• Maintain a healthy weight to reduce obesity-related risks</li>
+                      <li>• Mantén un peso saludable para reducir riesgos relacionados con la obesidad</li>
                     )}
-                    <li>• Compare plans from different insurance providers</li>
-                    <li>• Consider higher deductible plans to lower monthly premiums</li>
-                    <li>• Look into employer-sponsored group insurance options</li>
-                    <li>• Maintain a healthy lifestyle with regular exercise</li>
+                    <li>• Compara planes de diferentes proveedores de seguros</li>
+                    <li>• Considera planes con deducibles más altos para reducir las primas mensuales</li>
+                    <li>• Busca opciones de seguros grupales patrocinados por el empleador</li>
+                    <li>• Mantén un estilo de vida saludable con ejercicio regular</li>
                   </ul>
                 </div>
 
                 {/* Model Info */}
                 <div className="text-xs text-gray-500 border-t pt-4">
-                  <p>Model: {result.modelType}</p>
-                  <p>Estimate generated at: {new Date().toLocaleString()}</p>
+                  <p>Modelo: {result.modelType}</p>
+                  <p>Estimación generada el: {new Date().toLocaleString()}</p>
                 </div>
               </div>
             ) : (
               <div className="text-center text-gray-500 py-12">
                 <div className="text-6xl mb-4">💰</div>
-                <h3 className="text-lg font-semibold mb-2">Ready to Calculate</h3>
-                <p>Fill out the form to get your insurance cost estimate</p>
+                <h3 className="text-lg font-semibold mb-2">Listo para Calcular</h3>
+                <p>Completa el formulario para obtener tu estimación de costo de seguro</p>
               </div>
             )}
           </div>
@@ -331,9 +331,9 @@ export default function InsurancePage() {
         {/* Disclaimer */}
         <div className="mt-8 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
           <p className="text-yellow-800 text-sm">
-            <strong>Disclaimer:</strong> This is an estimate for educational purposes only.
-            Actual insurance costs may vary significantly based on specific plans, coverage options,
-            location, and insurance provider policies. Always consult with licensed insurance agents for accurate quotes.
+            <strong>Descargo de Responsabilidad:</strong> Esta es una estimación solo para fines educativos.
+            Los costos reales de seguros pueden variar significativamente basado en planes específicos, opciones de cobertura,
+            ubicación y políticas del proveedor de seguros. Siempre consulta con agentes de seguros licenciados para cotizaciones precisas.
           </p>
         </div>
       </div>

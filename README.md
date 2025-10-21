@@ -1,17 +1,23 @@
 # Predictor de Salud - Aplicación Web ML
 
-Aplicación web que implementa modelos de regresión de costos de seguro médico y predicción de diabetes con interfaz gráfica, desplegada en producción.
+Aplicación web que implementa modelos de regresión de costos de seguro médico y predicción de diabetes con interfaz gráfica, desplegada en producción en Railway.
+
+## 🚀 Demo en Vivo
+
+**Aplicación desplegada**: [Tu URL de Railway aquí]
 
 ## Qué hace
 
 - **Evaluación de Riesgo de Diabetes**: Predice el riesgo de diabetes basado en datos médicos con 78.6% de precisión
-- **Calculadora de Costos de Seguro**: Estima costos anuales de seguro médico con R² de 86.7%
+- **Calculadora de Costos de Seguros**: Estima costos anuales de seguro médico con R² de 86.7%
+- **Interfaz completamente en español** con formularios en inglés para compatibilidad técnica
 
 ## Stack Tecnológico
 
 - **Frontend**: Next.js + TypeScript + Tailwind CSS
-- **Backend**: Next.js API Routes + Scripts Python
-- **Modelos ML**: Scikit-learn (almacenados como archivos .pkl)
+- **Backend**: Next.js API Routes + Scripts Python nativos
+- **Modelos ML**: Scikit-learn (archivos .pkl reales entrenados)
+- **Deployment**: Railway (Node.js + Python en contenedor)
 - **Arquitectura**: Patrón Clean Architecture
 
 ## Estructura del Proyecto
@@ -22,22 +28,25 @@ Aplicación web que implementa modelos de regresión de costos de seguro médico
 │   ├── infrastructure/    # APIs y servicios externos
 │   └── presentation/      # Componentes UI
 ├── pages/                 # Páginas Next.js y rutas API
-│   ├── api/              # APIs TypeScript que llaman Python
+│   ├── api/              # APIs JavaScript que llaman Python
 │   ├── diabetes.tsx      # Página predicción diabetes
 │   └── insurance.tsx     # Página costos seguro
 ├── scripts/              # Scripts Python para predicciones ML
 ├── diabete/              # Modelo diabetes y entrenamiento
 ├── costos-medicos/       # Modelo seguro y entrenamiento
-└── telco/                # Telco churn (solo referencia)
+├── api/                  # Endpoints Python para Railway
+├── Dockerfile            # Configuración contenedor Railway
+├── railway.json          # Configuración deployment Railway
+└── requirements.txt      # Dependencias Python
 ```
 
 ## Cómo funciona
 
-1. **El usuario llena formulario** en interfaz web
+1. **El usuario llena formulario** en interfaz web (español)
 2. **Flujo Clean Architecture**: UI → UseCase → Repository → API
-3. **API llama script Python** con datos de entrada
-4. **Python carga modelo .pkl** y hace predicción
-5. **Resultado regresa** a través de la misma cadena
+3. **API llama script Python nativo** con datos de entrada
+4. **Python carga modelo .pkl real** y hace predicción usando transformadores personalizados
+5. **Resultado regresa** con recomendaciones personalizadas en español
 
 ## Modelos de Machine Learning
 
@@ -59,13 +68,14 @@ Aplicación web que implementa modelos de regresión de costos de seguro médico
 - Node.js 18+
 - Python 3.9+
 - npm o yarn
+- Cuenta en Railway (para deployment)
 
-### Instalación
+### Instalación Local
 
 1. **Clonar el repositorio**
 ```bash
 git clone [your-repo-url]
-cd ejemplo-api-ml
+cd prediccion-de-diabetes-y-costos-medicos
 ```
 
 2. **Instalar dependencias**
@@ -83,6 +93,21 @@ npm run dev
 ```
 http://localhost:3000
 ```
+
+### Deploy en Railway
+
+1. **Conectar repo a Railway**
+   - Ve a [railway.app](https://railway.app)
+   - Conecta tu repositorio GitHub
+   - Railway detectará automáticamente la configuración
+
+2. **Variables de entorno** (ninguna requerida)
+   - La app funciona sin variables adicionales
+
+3. **Deploy automático**
+   - Cada push a main deploya automáticamente
+   - Build time: ~3-5 minutos
+   - URL automática proporcionada
 
 ## Endpoints API
 
@@ -105,12 +130,27 @@ cd costos-medicos
 python train_model.py
 ```
 
-## Despliegue
+## Despliegue en Railway
 
-Listo para despliegue en Vercel:
-- `vercel.json` configurado para Python + TypeScript
-- `requirements.txt` para dependencias Python
-- Archivos .pkl estáticos incluidos
+La aplicación está configurada para Railway con soporte completo de Python + Node.js:
+
+### Archivos de Configuración
+- `Dockerfile` - Contenedor con Node.js 18 + Python 3.9
+- `railway.json` - Configuración de build y deploy
+- `requirements.txt` - Dependencias Python (scikit-learn, pandas, etc.)
+- `package.json` - Dependencias Node.js
+
+### Proceso de Deploy
+1. **Build**: Instala Node.js y Python dependencies
+2. **Runtime**: Ejecuta Next.js con acceso a scripts Python
+3. **Modelos**: Archivos .pkl incluidos en contenedor
+4. **APIs**: Endpoints Python nativos funcionando correctamente
+
+### Ventajas de Railway sobre Vercel
+- ✅ **Soporte completo Python** - Sin limitaciones serverless
+- ✅ **Modelos .pkl nativos** - Sin necesidad de conversión
+- ✅ **Zero cold starts** para Python
+- ✅ **Debugging completo** de errores Python
 
 ## Detalles de Estructura de Archivos
 

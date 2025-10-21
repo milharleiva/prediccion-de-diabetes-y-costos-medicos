@@ -96,14 +96,14 @@ export default function DiabetesPage() {
   const riskInfo = result ? formatRiskLevel(result.probabilityDiabetes) : null;
 
   return (
-    <Layout title="Diabetes Risk Assessment - Health Predictor">
+    <Layout title="Evaluación de Riesgo de Diabetes - Predictor de Salud">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-4">
-            Diabetes Risk Assessment
+            Evaluación de Riesgo de Diabetes
           </h1>
           <p className="text-lg text-gray-600">
-            Enter your health information to assess your diabetes risk using our AI model
+            Ingresa tu información de salud para evaluar tu riesgo de diabetes usando nuestro modelo de IA
           </p>
         </div>
 
@@ -150,10 +150,10 @@ export default function DiabetesPage() {
                   {loading ? (
                     <div className="flex items-center justify-center">
                       <div className="loading-spinner mr-2"></div>
-                      Analyzing...
+                      Analizando...
                     </div>
                   ) : (
-                    'Assess Diabetes Risk'
+                    'Evaluar Riesgo de Diabetes'
                   )}
                 </button>
                 <button
@@ -161,7 +161,7 @@ export default function DiabetesPage() {
                   onClick={handleReset}
                   className="btn-secondary px-6"
                 >
-                  Reset
+                  Restablecer
                 </button>
               </div>
             </form>
@@ -172,30 +172,30 @@ export default function DiabetesPage() {
             {result ? (
               <div className="space-y-6">
                 <div className="text-center">
-                  <h2 className="text-2xl font-bold mb-4">Assessment Results</h2>
+                  <h2 className="text-2xl font-bold mb-4">Resultados de la Evaluación</h2>
 
                   {/* Risk Level Badge */}
                   <div className={`inline-flex items-center px-6 py-3 rounded-full text-lg font-semibold ${riskInfo?.color}`}>
-                    {riskInfo?.level} Risk
+                    Riesgo {riskInfo?.level === 'High' ? 'Alto' : riskInfo?.level === 'Low' ? 'Bajo' : 'Medio'}
                   </div>
 
-                  <p className="text-gray-600 mt-2">{riskInfo?.description}</p>
+                  <p className="text-gray-600 mt-2">{riskInfo?.description === 'High risk of diabetes' ? 'Alto riesgo de diabetes' : riskInfo?.description === 'Low risk of diabetes' ? 'Bajo riesgo de diabetes' : 'Riesgo medio de diabetes'}</p>
                 </div>
 
                 {/* Probability Breakdown */}
                 <div className="space-y-4">
-                  <h3 className="font-semibold text-lg">Risk Analysis</h3>
+                  <h3 className="font-semibold text-lg">Análisis de Riesgo</h3>
 
                   <div className="space-y-3">
                     <div className="flex justify-between items-center">
-                      <span>No Diabetes Probability:</span>
+                      <span>Probabilidad Sin Diabetes:</span>
                       <span className="font-semibold text-green-600">
                         {formatPercentage(result.probabilityNoDiabetes)}
                       </span>
                     </div>
 
                     <div className="flex justify-between items-center">
-                      <span>Diabetes Probability:</span>
+                      <span>Probabilidad de Diabetes:</span>
                       <span className="font-semibold text-red-600">
                         {formatPercentage(result.probabilityDiabetes)}
                       </span>
@@ -213,28 +213,28 @@ export default function DiabetesPage() {
 
                 {/* Recommendations */}
                 <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                  <h3 className="font-semibold text-blue-900 mb-2">Recommendations</h3>
+                  <h3 className="font-semibold text-blue-900 mb-2">Recomendaciones</h3>
                   <ul className="text-blue-800 text-sm space-y-1">
                     {result.probabilityDiabetes > 0.7 ? (
                       <>
-                        <li>• Consult with a healthcare professional immediately</li>
-                        <li>• Consider getting HbA1c and fasting glucose tests</li>
-                        <li>• Adopt a low-sugar, balanced diet</li>
-                        <li>• Increase physical activity and exercise regularly</li>
+                        <li>• Consulta con un profesional de la salud inmediatamente</li>
+                        <li>• Considera hacerte pruebas de HbA1c y glucosa en ayunas</li>
+                        <li>• Adopta una dieta baja en azúcar y balanceada</li>
+                        <li>• Aumenta la actividad física y ejercítate regularmente</li>
                       </>
                     ) : result.probabilityDiabetes > 0.3 ? (
                       <>
-                        <li>• Monitor your blood sugar levels regularly</li>
-                        <li>• Maintain a healthy diet and exercise routine</li>
-                        <li>• Schedule regular checkups with your doctor</li>
-                        <li>• Consider lifestyle modifications to reduce risk</li>
+                        <li>• Monitorea tus niveles de azúcar en sangre regularmente</li>
+                        <li>• Mantén una dieta saludable y rutina de ejercicio</li>
+                        <li>• Programa chequeos regulares con tu médico</li>
+                        <li>• Considera modificaciones en el estilo de vida para reducir el riesgo</li>
                       </>
                     ) : (
                       <>
-                        <li>• Continue maintaining your healthy lifestyle</li>
-                        <li>• Keep up with regular health screenings</li>
-                        <li>• Stay physically active and eat a balanced diet</li>
-                        <li>• Monitor any changes in your health status</li>
+                        <li>• Continúa manteniendo tu estilo de vida saludable</li>
+                        <li>• Mantente al día con los exámenes de salud regulares</li>
+                        <li>• Mantente físicamente activo y come una dieta balanceada</li>
+                        <li>• Monitorea cualquier cambio en tu estado de salud</li>
                       </>
                     )}
                   </ul>
@@ -242,15 +242,15 @@ export default function DiabetesPage() {
 
                 {/* Model Info */}
                 <div className="text-xs text-gray-500 border-t pt-4">
-                  <p>Model: {result.modelType}</p>
-                  <p>Prediction generated at: {new Date().toLocaleString()}</p>
+                  <p>Modelo: {result.modelType}</p>
+                  <p>Predicción generada el: {new Date().toLocaleString()}</p>
                 </div>
               </div>
             ) : (
               <div className="text-center text-gray-500 py-12">
                 <div className="text-6xl mb-4">🩺</div>
-                <h3 className="text-lg font-semibold mb-2">Ready for Assessment</h3>
-                <p>Fill out the form to get your diabetes risk assessment</p>
+                <h3 className="text-lg font-semibold mb-2">Listo para la Evaluación</h3>
+                <p>Completa el formulario para obtener tu evaluación de riesgo de diabetes</p>
               </div>
             )}
           </div>
@@ -259,8 +259,8 @@ export default function DiabetesPage() {
         {/* Disclaimer */}
         <div className="mt-8 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
           <p className="text-yellow-800 text-sm">
-            <strong>Medical Disclaimer:</strong> This tool is for educational purposes only and should not replace professional medical advice.
-            Always consult with qualified healthcare providers for proper medical evaluation and treatment.
+            <strong>Descargo Médico:</strong> Esta herramienta es solo para fines educativos y no debe reemplazar el consejo médico profesional.
+            Siempre consulta con proveedores de atención médica calificados para una evaluación y tratamiento médico adecuado.
           </p>
         </div>
       </div>
