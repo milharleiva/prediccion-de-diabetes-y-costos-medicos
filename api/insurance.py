@@ -5,11 +5,9 @@ import sys
 import joblib
 import pandas as pd
 
-# Add the scripts directory to path
+# Add the current directory to path
 current_dir = os.path.dirname(os.path.abspath(__file__))
-parent_dir = os.path.dirname(current_dir)
-scripts_dir = os.path.join(parent_dir, 'scripts')
-sys.path.append(scripts_dir)
+sys.path.append(current_dir)
 
 # Import custom transformers
 try:
