@@ -4,7 +4,7 @@ Aplicación web que implementa modelos de regresión de costos de seguro médico
 
 ## 🚀 Demo en Vivo
 
-**Aplicación desplegada**: [Tu URL de Railway aquí]
+**Aplicación desplegada**: https://prediccion-de-diabetes-y-costos-medicos-production.up.railway.app/
 
 ## Qué hace
 
