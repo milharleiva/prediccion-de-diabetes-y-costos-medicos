@@ -47,6 +47,7 @@ class handler(BaseHTTPRequestHandler):
             age = data.get('age', 0)
 
             # Load the model
+            parent_dir = os.path.dirname(current_dir)
             model_path = os.path.join(parent_dir, 'diabetes_model.pkl')
 
             if not os.path.exists(model_path):

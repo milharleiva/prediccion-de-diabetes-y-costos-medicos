@@ -45,6 +45,7 @@ class handler(BaseHTTPRequestHandler):
             region = data.get('region', 'northeast')
 
             # Load the model
+            parent_dir = os.path.dirname(current_dir)
             model_path = os.path.join(parent_dir, 'insurance_cost_model.pkl')
 
             if not os.path.exists(model_path):
