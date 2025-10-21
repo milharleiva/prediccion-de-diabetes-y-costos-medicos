@@ -1,5 +1,7 @@
 # Predictor de Salud - Aplicación Web ML
 
+trabajo hecho por Milhar Leiva , Rodrigo garces, Geral Bahamondes
+
 Aplicación web que implementa modelos de regresión de costos de seguro médico y predicción de diabetes con interfaz gráfica, desplegada en producción en Railway.
 
 ## 🚀 Demo en Vivo
