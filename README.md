@@ -211,6 +211,3 @@ Este proyecto aborda las siguientes preguntas de investigación a través de imp
 3. Agregar pruebas para nuevas características
 4. Actualizar README para nueva funcionalidad
 
-## Licencia
-
-MIT License
